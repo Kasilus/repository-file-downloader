@@ -6,54 +6,41 @@
   </head>
   <body>
     <div class="main">
+      <form method="post" action="/download">
       <table style="width:100%">
-        <tr style="text-align:center, border: 1px solid black">
-          <th>Module</th>
-          <th>Version</th>
-          <th>Submodule</th>
-          <th>Check?</th>
-        </tr>
-        <% for(let i=0; i < modules.length; i++) { %>
-           <% for (let j = 0; j < modules[i].submodules.length; j++) { %>
-             <tr style="text-align:center">
-               <td><label><%= modules[i].name %></label></td>
-               <td><label><%= modules[i].version %></label></td>
-               <td><label><%= modules[i].submodules[j] %></label></td>
-               <td><input type="checkbox" name="modules" checked/></td>
-             </tr>
+          <tr style="text-align:center, border: 1px solid black">
+            <th>Module</th>
+            <th>Version</th>
+            <th>Submodule</th>
+            <th>Check?</th>
+            <th>Status</th>
+          </tr>
+          <% for(let i=0; i < modules.length; i++) { %>
+             <% for (let j = 0; j < modules[i].submodules.length; j++) { %>
+               <tr style="text-align:center">
+                 <td><label><%= modules[i].name %></label></td>
+                 <td><label><%= modules[i].version %></label></td>
+                 <td><label><%= modules[i].submodules[j] %></label></td>
+                 <td><input type="checkbox" name="modules" checked/></td>
+                 <td>OK<td>
+               </tr>
+            <% } %>
           <% } %>
-        <% } %>
-        <!-- <tr style="text-align:center">
-          <td><label for="POC-AM">Product Offering Catalog. Accelerated Mode</label></td>
-          <td><label>10.4.12.3-rc005</td>
-          <td><label>product-offering-catalog-accelerated-mode-api</label></td>
-          <td><input type="checkbox" id="poc_am_api" name="modules" value="POC-AM-API" checked/></td>
-        </tr>
-        <tr style="text-align:center">
-          <td></td>
-          <td></td>
-          <td><label>product-offering-catalog-accelerated-mode-impl</label></td>
-          <td><input type="checkbox" id="poc_am_impl" name="modules" value="POC-AM-IMPL" checked/></td>
-        </tr>
-        <tr style="text-align:center">
-          <td><label for="POC-AM">Sales Order Engine</label></td>
-          <td><label>10.5.0.6-SNAPSHOT</td>
-          <td><label>sales-order-engine-extension-api</label></td>
-          <td><input type="checkbox" id="soe_ext_api" name="modules" value="SOE-EXT-API" checked/></td>
-        </tr>
-        <tr style="text-align:center">
-          <td></td>
-          <td></td>
-          <td><label>sales-order-engine-web-api</label></td>
-          <td><input type="checkbox" id="soe_web_api" name="modules" value="SOE-WEB-API" checked/></td>
-        </tr>
-        <tr style="text-align:center">
-          <td><label for="all">All</label></td>
-          <td></td>
-          <td></td>
-          <td><input type="checkbox" id="all" value="ALL" onclick="checkAllModules()" checked></td>
-        </tr> -->
+          <tr style="text-align:center">
+            <td><label><input type="hidden" name="JSOUP_module" value="JSOUP-module"/>JSOUP MODULE</label></td>
+            <td><label><input type="hidden" name="JSOUP_version" value="jsoup_version_2.2.1-rc003"/>2.2.1-rc003</td>
+            <td><label><input type="hidden" name="jsoup_submodule" value="jsoup_submodule"/>jsoup submodule</label></td>
+            <td><input type="checkbox" id="jsoup_submodule_id" name="modules" value="jsoup_submodule_checkbox" checked/></td>
+          </tr>
+          <tr style="text-align:center">
+            <td><label for="all">All</label></td>
+            <td></td>
+            <td></td>
+            <td><input type="checkbox" id="all" value="ALL" onclick="checkAllModules()" checked></td>
+          </tr>
       </table>
+      <input style="margin-left:auto; margin-right:auto" type="submit" value="Check">
+    </form>
     </div>
   </body>
   <script>
