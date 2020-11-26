@@ -9,14 +9,9 @@ let app = express();
 app.set('views', path.join(__dirname, 'templates'));
 app.set("view engine", "ejs");
 
-console.log(modules);
-
 app.get("/", (req, res) => {
   res.render("index", {
-        modules: modules.modules,
-        user: {
-          name: 'John Doe'
-        }
+        modules: modules.modules
     });
 })
 
