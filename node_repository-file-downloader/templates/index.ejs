@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Check libraries</title>
+  </head>
+  <body>
+    <div class="main">
+      <table style="width:100%">
+        <tr style="text-align:center, border: 1px solid black">
+          <th>Module</th>
+          <th>Version</th>
+          <th>Submodule</th>
+          <th>Check?</th>
+        </tr>
+        <% for(let i=0; i < modules.length; i++) { %>
+           <% for (let j = 0; j < modules[i].submodules.length; j++) { %>
+             <tr style="text-align:center">
+               <td><label><%= modules[i].name %></label></td>
+               <td><label><%= modules[i].version %></label></td>
+               <td><label><%= modules[i].submodules[j] %></label></td>
+               <td><input type="checkbox" name="modules" checked/></td>
+             </tr>
+          <% } %>
+        <% } %>
+        <!-- <tr style="text-align:center">
+          <td><label for="POC-AM">Product Offering Catalog. Accelerated Mode</label></td>
+          <td><label>10.4.12.3-rc005</td>
+          <td><label>product-offering-catalog-accelerated-mode-api</label></td>
+          <td><input type="checkbox" id="poc_am_api" name="modules" value="POC-AM-API" checked/></td>
+        </tr>
+        <tr style="text-align:center">
+          <td></td>
+          <td></td>
+          <td><label>product-offering-catalog-accelerated-mode-impl</label></td>
+          <td><input type="checkbox" id="poc_am_impl" name="modules" value="POC-AM-IMPL" checked/></td>
+        </tr>
+        <tr style="text-align:center">
+          <td><label for="POC-AM">Sales Order Engine</label></td>
+          <td><label>10.5.0.6-SNAPSHOT</td>
+          <td><label>sales-order-engine-extension-api</label></td>
+          <td><input type="checkbox" id="soe_ext_api" name="modules" value="SOE-EXT-API" checked/></td>
+        </tr>
+        <tr style="text-align:center">
+          <td></td>
+          <td></td>
+          <td><label>sales-order-engine-web-api</label></td>
+          <td><input type="checkbox" id="soe_web_api" name="modules" value="SOE-WEB-API" checked/></td>
+        </tr>
+        <tr style="text-align:center">
+          <td><label for="all">All</label></td>
+          <td></td>
+          <td></td>
+          <td><input type="checkbox" id="all" value="ALL" onclick="checkAllModules()" checked></td>
+        </tr> -->
+      </table>
+    </div>
+  </body>
+  <script>
+      function checkAllModules() {
+          var allCheckBoxChecked = document.getElementById("all").checked;
+          var modulesItems = document.getElementsByName("modules");
+          for (var i = 0; i < modulesItems.length; i++) {
+            modulesItems.item(i).checked = allCheckBoxChecked;
+          }
+      }
+  </script>
+</html>
