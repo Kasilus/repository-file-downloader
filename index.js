@@ -1,6 +1,7 @@
 const http = require('http');
 const express = require('express');
 const path = require('path');
+const axios = require('axios');
 
 const modules = require('./modules.js');
 
@@ -19,10 +20,19 @@ app.get("/", (req, res) => {
 });
 
 app.post("/download", (req, res) => {
-  console.log('in download');
-})
-
-
+  const modules_info = req.body;
+  const length = modules_info.modules_module.length;
+  const urls = [];
+  for (let i = 0; i < length; i++) {
+    const full_submodule_name = modules_info.modules_module[i] + '-' + modules_info.modules_submodule[i];
+    let url = modules.url + '/' + modules_info.modules_module[i]
+    + '/' + full_submodule_name
+    + '/' + modules_info.modules_version[i]
+    + '/' + full_submodule_name + '-' + modules_info.modules_version[i] + '.jar';
+    urls.push(url);
+  }
+  console.log(urls);
+});
 
 var port = 3000;
 app.listen(port, () => {

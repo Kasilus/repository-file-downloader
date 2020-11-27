@@ -18,11 +18,11 @@
           <% for(let i=0; i < modules.length; i++) { %>
              <% for (let j = 0; j < modules[i].submodules.length; j++) { %>
                <tr style="text-align:center">
-                 <td><label><%= modules[i].name %></label></td>
-                 <td><label><%= modules[i].version %></label></td>
-                 <td><label><%= modules[i].submodules[j] %></label></td>
-                 <td><input type="checkbox" name="modules" checked/></td>
-                 <td>OK<td>
+                 <td><label><input type="hidden" name="modules_module" value="<%= modules[i].name %>"><%= modules[i].name %></label></td>
+                 <td><label><input type="hidden" name="modules_version" value="<%= modules[i].version %>"/><%= modules[i].version %></label></td>
+                 <td><label><input type="hidden" name="modules_submodule" value="<%= modules[i].submodules[j] %>"/><%= modules[i].submodules[j] %></label></td>
+                 <td><input type="checkbox" name="modules_check" checked/></td>
+                 <td><label><input type="hidden" name="modules_status" value="OK"/>OK</label><td>
                </tr>
             <% } %>
           <% } %>
@@ -30,7 +30,7 @@
             <td><label><input type="hidden" name="JSOUP_module" value="JSOUP-module"/>JSOUP MODULE</label></td>
             <td><label><input type="hidden" name="JSOUP_version" value="jsoup_version_2.2.1-rc003"/>2.2.1-rc003</td>
             <td><label><input type="hidden" name="jsoup_submodule" value="jsoup_submodule"/>jsoup submodule</label></td>
-            <td><input type="checkbox" id="jsoup_submodule_id" name="modules" value="jsoup_submodule_checkbox" checked/></td>
+            <td><input type="checkbox" id="jsoup_submodule_id" name="jsoup_check" checked/></td>
           </tr>
           <tr style="text-align:center">
             <td><label for="all">All</label></td>
@@ -46,7 +46,7 @@
   <script>
       function checkAllModules() {
           var allCheckBoxChecked = document.getElementById("all").checked;
-          var modulesItems = document.getElementsByName("modules");
+          var modulesItems = document.getElementsByName("modules_check");
           for (var i = 0; i < modulesItems.length; i++) {
             modulesItems.item(i).checked = allCheckBoxChecked;
           }
