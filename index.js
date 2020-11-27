@@ -2,10 +2,16 @@ const http = require('http');
 const express = require('express');
 const path = require('path');
 const axios = require('axios');
+const fs = require('fs');
 
 const modules = require('./modules.js');
+const dir = './tmp';
 
 let app = express();
+
+if (!fs.existsSync(dir)){
+    fs.mkdirSync(dir);
+}
 
 // Parse URL-encoded bodies (as sent by HTML forms)
 app.use(express.urlencoded());
@@ -20,10 +26,10 @@ app.get("/", (req, res) => {
 });
 
 app.post("/download", (req, res) => {
+  console.log('start download');
   const modules_info = req.body;
-  const length = modules_info.modules_module.length;
   const urls = [];
-  for (let i = 0; i < length; i++) {
+  for (let i = 0; i < modules_info.modules_module.length; i++) {
     const full_submodule_name = modules_info.modules_module[i] + '-' + modules_info.modules_submodule[i];
     let url = modules.url + '/' + modules_info.modules_module[i]
     + '/' + full_submodule_name
@@ -31,7 +37,24 @@ app.post("/download", (req, res) => {
     + '/' + full_submodule_name + '-' + modules_info.modules_version[i] + '.jar';
     urls.push(url);
   }
+
   console.log(urls);
+
+  for (let i = 0; i < urls.length; i++) {
+    axios({
+      method: 'get',
+      url: urls[i],
+      responseType: 'stream'
+    }).then(function (response) {
+      console.log('in then with url: ' + urls[i]);
+      response.data.pipe(fs.createWriteStream("./tmp/" + urls[i].substring(urls[i].lastIndexOf('/'))));
+    }).catch(function (error) {
+      console.log('in then with url: ' + urls[i]);
+      console.log(error);
+    });
+  }
+
+  console.log('end download');
 });
 
 var port = 3000;
