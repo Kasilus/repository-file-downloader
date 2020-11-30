@@ -26,6 +26,13 @@ module.exports = {
           "structure-checking",
           "error-handling"
         ]
+      },
+      {
+        name: "module_only",
+        version: "12.3.3.1",
+        submodules: [
+          ""
+        ]
       }
   ]
 }

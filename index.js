@@ -30,7 +30,9 @@ app.post("/download", (req, res) => {
   const modules_info = req.body;
   const urls = [];
   for (let i = 0; i < modules_info.modules_module.length; i++) {
-    const full_submodule_name = modules_info.modules_module[i] + '-' + modules_info.modules_submodule[i];
+    const full_submodule_name = modules_info.modules_submodule[i] != ''
+    ? modules_info.modules_module[i] + '-' + modules_info.modules_submodule[i]
+    : modules_info.modules_module[i];
     let url = modules.url + '/' + modules_info.modules_module[i]
     + '/' + full_submodule_name
     + '/' + modules_info.modules_version[i]
