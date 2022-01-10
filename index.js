@@ -33,11 +33,15 @@ app.post("/download", (req, res) => {
     const full_submodule_name = modules_info.modules_submodule[i] != ''
     ? modules_info.modules_module[i] + '-' + modules_info.modules_submodule[i]
     : modules_info.modules_module[i];
-    let url = modules.url + '/' + modules_info.modules_module[i]
+    let url_prefix = modules.url + '/' + modules_info.modules_module[i]
     + '/' + full_submodule_name
     + '/' + modules_info.modules_version[i]
-    + '/' + full_submodule_name + '-' + modules_info.modules_version[i] + '.jar';
-    urls.push(url);
+    + '/' + full_submodule_name + '-' + modules_info.modules_version[i];
+    let url;
+    for (let j = 0; j < modules.extensions.length; j++) {
+      url = (' ' + url_prefix).slice(1) + '.' + modules.extensions[j];
+      urls.push(url);
+    }
   }
 
   console.log(urls);
@@ -51,12 +55,32 @@ app.post("/download", (req, res) => {
       console.log('in then with url: ' + urls[i]);
       response.data.pipe(fs.createWriteStream("./tmp/" + urls[i].substring(urls[i].lastIndexOf('/'))));
     }).catch(function (error) {
-      console.log('in then with url: ' + urls[i]);
-      console.log(error);
+      console.log('in error with url: ' + urls[i]);
     });
   }
 
   console.log('end download');
+});
+
+const sleepRequest = (milliseconds, originalRequest) => {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => resolve(axios(originalRequest)), milliseconds);
+    });
+};
+
+axios.interceptors.response.use(
+  response => response,
+  (error) => {
+
+    var currentdate = new Date();
+
+    console.log('error [TIMESTAMP, URL] = [' + currentdate + ', ' +  error.config.url + ']');
+    const originalRequest = error.config;
+    if (originalRequest && error.response && error.response.status === 404) {
+      return sleepRequest(1000 * 60 * 30, originalRequest);
+    } else {
+      return Promise.reject(error);
+    }
 });
 
 var port = 3000;

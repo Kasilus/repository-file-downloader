@@ -1,5 +1,6 @@
 module.exports = {
     url: 'www.site.com/path/to/resource',
+    extensions: ['pom', 'jar'],
     modules: [
       {
         name: "io",
